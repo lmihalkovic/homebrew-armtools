@@ -1,6 +1,8 @@
 require 'formula'
 
 
+# https://raw.githubusercontent.com/gnuarmeclipse/build-scripts/master/scripts/build-openocd.sh
+
 class OpenOcd < Formula
 
   desc "On-chip debugging, in-system programming and boundary-scan testing"
