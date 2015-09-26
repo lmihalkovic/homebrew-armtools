@@ -8,16 +8,13 @@ class OpenOcd < Formula
   url "https://downloads.sourceforge.net/project/openocd/openocd/0.9.0/openocd-0.9.0.tar.bz2"
   sha256 "837042ac9a156b9363cbffa1fcdaf463bfb83a49331addf52e63119642b5f443"
 
-
-  option "without-hidapi", "Disable building support for devices using HIDAPI (CMSIS-DAP)"
-  option "without-libusb",  "Disable building support for all other USB adapters"
-  option "without-stlink",  "Disable building driver for STLink"
+  option "without-libusb", "Disable building support for generic USB adapters"
+  option "without-stlink", "Disable building driver for STLink"
 
   depends_on "pkg-config" => :build
-  # depends_on "libusb" => :recommended
-  # some drivers are still not converted to libusb-1.0
+  depends_on "libusb" => :recommended
+  # some drivers are not converted to libusb-1.0
   depends_on "libusb-compat" if build.with? "libusb"
-  depends_on "hidapi" => :recommended
 
 
   def install
@@ -29,6 +26,10 @@ class OpenOcd < Formula
       --enable-stlink
       --enable-jtag_vpi
       --enable-remote-bitbang
+
+     --disable-parport
+     --disable-parport-ppdev
+     --disable-parport-giveio
     ]
 
     system "./configure", *args
